@@ -3,3 +3,12 @@ languageCode = "en-us"
 title = "Jake's Micro-Blog"
 theme = "hugo-kiera"
 publishDir = "docs"
+
+[author]
+    name = "Jake Coffman"
+    github = "jakecoffman"
+    twitter = "nill"
+
+[params]
+    tagline = "see also https://jakecoffman.com"
+    customCSS = []  #Optional Customised CSS
