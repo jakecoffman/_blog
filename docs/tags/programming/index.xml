@@ -12,6 +12,23 @@
    
    
      <item>
+       <title>ported Guacamole Client to Go</title>
+       <link>https://www.jakecoffman.com/blog/post/03/</link>
+       <pubDate>Sun, 19 Jan 2020 14:29:28 -0600</pubDate>
+       
+       <guid>https://www.jakecoffman.com/blog/post/03/</guid>
+       <description>&lt;p&gt;I was able to open source some work I did at &lt;a href=&#34;https://wwt.com&#34;&gt;WWT&lt;/a&gt; recently. It is a port of the Apache Guacamole Client to Go: &lt;a href=&#34;https://github.com/wwt/guac&#34;&gt;https://github.com/wwt/guac&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The Apache Guacamole project describes itself better than I could:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Apache Guacamole is a clientless remote desktop gateway. It supports standard protocols like VNC, RDP, and SSH. We call it clientless because no plugins or client software are required. Thanks to HTML5, once Guacamole is installed on a server, all you need to access your desktops is a web browser.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I ported the client from Java to Go. The client sits between &lt;code&gt;guacd&lt;/code&gt; and the JavaScript app. The main motivation for this was Go is easier to work with than the old Java servlet setup that the Apache project uses.&lt;/p&gt;
+&lt;p&gt;I also created a simple SPA example using Vue: &lt;a href=&#34;https://github.com/wwt/guac-vue&#34;&gt;https://github.com/wwt/guac-vue&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The official project uses the old AngularJS 1.X so I thought a nice Vue example would be good to have on hand.&lt;/p&gt;
+</description>
+     </item>
+   
+     <item>
        <title>stack traces rule</title>
        <link>https://www.jakecoffman.com/blog/post/02/</link>
        <pubDate>Sun, 19 Jan 2020 14:29:28 -0600</pubDate>
