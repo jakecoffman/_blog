@@ -1,0 +1,5 @@
+baseURL = "https://www.jakecoffman.com/blog/"
+languageCode = "en-us"
+title = "Jake's Micro-Blog"
+theme = "hugo-kiera"
+publishDir = "docs"

@@ -1,0 +1,27 @@
+
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+ <channel>
+   <title>Jake&#39;s Micro-Blog</title>
+   <link>https://www.jakecoffman.com/blog/</link>
+   <description>Recent content on Jake&#39;s Micro-Blog</description>
+   <generator>Hugo -- gohugo.io</generator>
+   <language>en-us</language>
+   <lastBuildDate>Sun, 19 Jan 2020 13:51:58 -0600</lastBuildDate>
+   
+       <atom:link href="https://www.jakecoffman.com/blog/index.xml" rel="self" type="application/rss+xml" />
+   
+   
+     <item>
+       <title>First post</title>
+       <link>https://www.jakecoffman.com/blog/post/first/</link>
+       <pubDate>Sun, 19 Jan 2020 13:51:58 -0600</pubDate>
+       
+       <guid>https://www.jakecoffman.com/blog/post/first/</guid>
+       <description>&lt;p&gt;I&#39;ve tried starting a blog up about a million times and I usually don&#39;t post anything and delete it.&lt;/p&gt;
+&lt;p&gt;This time I&#39;ll try to make it stick by keeping it a &amp;ldquo;Micro-Blog&amp;rdquo; ala Twitter.&lt;/p&gt;
+&lt;p&gt;And with that&amp;hellip;&lt;/p&gt;
+</description>
+     </item>
+   
+ </channel>
+</rss>
