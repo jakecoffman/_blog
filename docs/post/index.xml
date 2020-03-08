@@ -70,7 +70,7 @@ sudo systemctl enable wg-quick@wg0.service
      </item>
    
      <item>
-       <title>Simple Jenkins in Docker setup</title>
+       <title>simple Jenkins-in-Docker setup</title>
        <link>https://www.jakecoffman.com/blog/post/04/</link>
        <pubDate>Sun, 08 Mar 2020 13:13:44 -0500</pubDate>
        
