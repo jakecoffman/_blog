@@ -11,6 +11,64 @@
    
    
      <item>
+       <title>home Wireguard setup</title>
+       <link>https://www.jakecoffman.com/blog/post/05/</link>
+       <pubDate>Sun, 08 Mar 2020 14:49:48 -0500</pubDate>
+       
+       <guid>https://www.jakecoffman.com/blog/post/05/</guid>
+       <description>&lt;p&gt;Here&#39;s a quick guide to setting up Wireguard to connect your Android phone to your home network.&lt;/p&gt;
+&lt;h2 id=&#34;server-setup&#34;&gt;Server setup&lt;/h2&gt;
+&lt;p&gt;Do all of this as root.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Install Wireguard&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mkdir /etc/wireguard&lt;/code&gt; if it doesn&#39;t already exist&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cd /etc/wireguard&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;umask 077&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;wg genkey | tee privatekey | wg pubkey &amp;gt; publickey&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;vim wg0.conf&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;wg0.conf should have these contents:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[Interface]
+Address = 192.168.2.1  # this is the IP the server will have. Choose an unused subnet.
+PrivateKey = &amp;lt;server&#39;s privatekey (not path to it, the actual private key)&amp;gt;
+ListenPort = 51820 # this is the default Wireguard port
+PostUp   = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o enp2s5 -j MASQUERADE
+PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o enp2s5 -j
+
+[Peer]
+PublicKey = &amp;lt;client&#39;s publickey (actual private key)&amp;gt; # You will set the in the next part
+AllowedIPs = 192.168.2.2/32 # based on the subnet you&#39;ve chosen in the address above
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Replace &lt;code&gt;enp2s5&lt;/code&gt; with your actual device name. You can get this with &lt;code&gt;ip link show&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;client-setup&#34;&gt;Client setup&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Install the Wireguard Android app&lt;/li&gt;
+&lt;li&gt;Touch &amp;ldquo;Create from scratch&amp;rdquo; under the plus menu&lt;/li&gt;
+&lt;li&gt;Name it&lt;/li&gt;
+&lt;li&gt;Generate a private and public key pair&lt;/li&gt;
+&lt;li&gt;Copy the public key somehow to the server (email?)&lt;/li&gt;
+&lt;li&gt;Set &lt;code&gt;Addresses&lt;/code&gt; to be in the subnet, e.g. &lt;code&gt;192.168.2.2&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Then add the sever as a peer by tapping &amp;ldquo;Add Peer&amp;rdquo;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Add the server&#39;s public key (it&#39;s in &lt;code&gt;/etc/wireguard/publickey&lt;/code&gt;, email it to yourself again)&lt;/li&gt;
+&lt;li&gt;In &lt;code&gt;Allowed IPs&lt;/code&gt; put &lt;code&gt;0.0.0.0/0, ::/0&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;In &lt;code&gt;Endpoint&lt;/code&gt; put in your server&#39;s IP or Host, like &lt;code&gt;my.server.com:51820&lt;/code&gt;. This port should match the port configured on the server &lt;code&gt;ListenPort&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Optionally set &lt;code&gt;Persistant keepalive&lt;/code&gt; to a value (e.g. &lt;code&gt;25&lt;/code&gt;) if you want the connection to send keepalives.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;That&#39;s it! Try to connect. If it worked it will say &lt;code&gt;Transfer&lt;/code&gt; and how much data has transferred.&lt;/p&gt;
+&lt;p&gt;If it doesn&#39;t work check:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Your router should be forwarding port 51820 to your server.&lt;/li&gt;
+&lt;li&gt;Your server&#39;s firewall should be allowing port 51820. Just UDP I think?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;You&#39;ll also want this to start on the server at startup, so do this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo chown -R root:root /etc/wireguard/
+sudo chmod -R og-rwx /etc/wireguard/*
+sudo systemctl enable wg-quick@wg0.service
+&lt;/code&gt;&lt;/pre&gt;</description>
+     </item>
+   
+     <item>
        <title>Simple Jenkins in Docker setup</title>
        <link>https://www.jakecoffman.com/blog/post/04/</link>
        <pubDate>Sun, 08 Mar 2020 13:13:44 -0500</pubDate>

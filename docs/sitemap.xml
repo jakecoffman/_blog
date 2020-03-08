@@ -3,27 +3,32 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://www.jakecoffman.com/blog/post/05/</loc>
+    <lastmod>2020-03-08T14:49:48-05:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.jakecoffman.com/blog/</loc>
-    <lastmod>2020-03-08T13:13:44-05:00</lastmod>
+    <lastmod>2020-03-08T14:49:48-05:00</lastmod>
   </url>
   
   <url>
     <loc>https://www.jakecoffman.com/blog/tags/operations/</loc>
-    <lastmod>2020-03-08T13:13:44-05:00</lastmod>
+    <lastmod>2020-03-08T14:49:48-05:00</lastmod>
   </url>
   
   <url>
     <loc>https://www.jakecoffman.com/blog/post/</loc>
-    <lastmod>2020-03-08T13:13:44-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jakecoffman.com/blog/post/04/</loc>
-    <lastmod>2020-03-08T13:13:44-05:00</lastmod>
+    <lastmod>2020-03-08T14:49:48-05:00</lastmod>
   </url>
   
   <url>
     <loc>https://www.jakecoffman.com/blog/tags/</loc>
+    <lastmod>2020-03-08T14:49:48-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jakecoffman.com/blog/post/04/</loc>
     <lastmod>2020-03-08T13:13:44-05:00</lastmod>
   </url>
   
