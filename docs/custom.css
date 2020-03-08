@@ -20,3 +20,7 @@ p > a:visited {
     color: #9590ff !important;
     text-decoration: underline !important;
 }
+
+h1 > a {
+    color: #4ba2a2 !important;
+}
