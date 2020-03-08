@@ -18,7 +18,7 @@
        
        <guid>https://www.jakecoffman.com/blog/post/04/</guid>
        <description>&lt;p&gt;I set up my home lab again with a new hard drive and decided to host Jenkins in Docker. &lt;a href=&#34;https://jenkins.io/doc/book/installing/&#34;&gt;This page&lt;/a&gt; details how to run Jenkins in a container, but the instructions lacked specifics of how to get things going on a single box.&lt;/p&gt;
-&lt;p&gt;So here&#39;s how I did it: I created two systemd configs (place these in &lt;code&gt;/etc/systemd&lt;/code&gt;):&lt;/p&gt;
+&lt;p&gt;So here&#39;s how I did it: I created two systemd configs (place these in &lt;code&gt;/etc/systemd/system&lt;/code&gt; as &lt;code&gt;jenkins.service&lt;/code&gt; and &lt;code&gt;jenkins-docker.service&lt;/code&gt;):&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;[Unit]
 Description=Jenkins
 After=docker.service
