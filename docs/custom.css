@@ -1,12 +1,14 @@
 
 code {
     background: #343434 !important;
+    color: limegreen !important;
 }
 
 pre {
     background: #343434 !important;
     border-radius: 5px;
     box-shadow: none !important;
+    color: limegreen !important;
 }
 
 p > a {
