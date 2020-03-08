@@ -2,6 +2,7 @@
 code {
     background: #343434 !important;
     color: limegreen !important;
+    font-size: .85rem !important;
 }
 
 pre {
@@ -19,6 +20,10 @@ p > a {
 p > a:visited {
     color: #9590ff !important;
     text-decoration: underline !important;
+}
+
+h1,h2,h3,h4,h5 {
+    color: #4ba2a2 !important;
 }
 
 h1 > a {

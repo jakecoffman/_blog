@@ -22,6 +22,10 @@ p > a:visited {
     text-decoration: underline !important;
 }
 
+h1,h2,h3,h4,h5 {
+    color: #4ba2a2 !important;
+}
+
 h1 > a {
     color: #4ba2a2 !important;
 }
