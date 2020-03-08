@@ -11,4 +11,4 @@ publishDir = "docs"
 
 [params]
     tagline = "see also https://jakecoffman.com"
-    customCSS = []  #Optional Customised CSS
+    customCSS = ["custom.css"]  #Optional Customised CSS
