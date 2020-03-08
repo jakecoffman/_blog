@@ -1,0 +1,125 @@
+
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+ <channel>
+   <title>operations on Jake&#39;s Micro-Blog</title>
+   <link>https://www.jakecoffman.com/blog/tags/operations/</link>
+   <description>Recent content in operations on Jake&#39;s Micro-Blog</description>
+   <generator>Hugo -- gohugo.io</generator>
+   <language>en-us</language>
+   <lastBuildDate>Sun, 08 Mar 2020 13:13:44 -0500</lastBuildDate>
+   
+       <atom:link href="https://www.jakecoffman.com/blog/tags/operations/index.xml" rel="self" type="application/rss+xml" />
+   
+   
+     <item>
+       <title>Simple Jenkins in Docker setup</title>
+       <link>https://www.jakecoffman.com/blog/post/04/</link>
+       <pubDate>Sun, 08 Mar 2020 13:13:44 -0500</pubDate>
+       
+       <guid>https://www.jakecoffman.com/blog/post/04/</guid>
+       <description>&lt;p&gt;I set up my home lab again with a new hard drive and decided to host Jenkins in Docker. &lt;a href=&#34;https://jenkins.io/doc/book/installing/&#34;&gt;This page&lt;/a&gt; details how to run Jenkins in a container, but the instructions lacked specifics of how to get things going on a single box.&lt;/p&gt;
+&lt;p&gt;So here&#39;s how I did it: I created two systemd configs (place these in &lt;code&gt;/etc/systemd&lt;/code&gt;):&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[Unit]
+Description=Jenkins
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+User=jake
+Group=jake
+Restart=always
+ExecStart=docker container run \
+            --name jenkins \
+            --rm \
+            --user 0 \
+            --network jenkins \
+            --env DOCKER_HOST=tcp://docker:2376 \
+            --env DOCKER_CERT_PATH=/certs/client \
+            --env DOCKER_TLS_VERIFY=1 \
+            --env JENKINS_OPTS=&#39;--prefix=/jenkins&#39; \
+            --publish 8080:8080 \
+            --publish 50000:50000 \
+            --volume /var/jenkins_home:/var/jenkins_home \
+            --volume jenkins-docker-certs:/certs/client:ro \
+            jenkinsci/blueocean
+ExecStop=docker stop jenkins
+
+[Install]
+WantedBy=multi-user.target
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;To the docker command I added &lt;code&gt;--user 0&lt;/code&gt; because the docker containers that the Jenkins jobs were trying to use my user (1000) which obviously wasn&#39;t working. I also mounted the volume to my local &lt;code&gt;/var/jenkins_home&lt;/code&gt;. I also removed &lt;code&gt;--detach&lt;/code&gt; since systemd expects commands to block.&lt;/p&gt;
+&lt;p&gt;Here&#39;s the other config:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[Unit]
+Description=Jenkins Docker
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+User=jake
+Group=jake
+Restart=always
+ExecStart=docker container run --name jenkins-docker --rm \
+            --user 0 \
+            --privileged --network jenkins --network-alias docker \
+            --env DOCKER_TLS_CERTDIR=/certs \
+            --volume jenkins-docker-certs:/certs/client \
+            --volume /var/jenkins_home:/var/jenkins_home \
+            --publish 2376:2376 docker:dind
+ExecStop=docker stop jenkins-docker
+
+[Install]
+WantedBy=multi-user.target
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Similar changes here.&lt;/p&gt;
+&lt;p&gt;To get things going run these commands:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;systemctl reload-daemon
+systemctl jenkins start
+systemctl jenkins-docker start
+&lt;/code&gt;&lt;/pre&gt;</description>
+     </item>
+   
+     <item>
+       <title>Guacamole Client ported to Go</title>
+       <link>https://www.jakecoffman.com/blog/post/03/</link>
+       <pubDate>Sun, 19 Jan 2020 14:29:28 -0600</pubDate>
+       
+       <guid>https://www.jakecoffman.com/blog/post/03/</guid>
+       <description>&lt;p&gt;I was able to open source some work I did at &lt;a href=&#34;https://wwt.com&#34;&gt;WWT&lt;/a&gt; recently. It is a port of the Apache Guacamole Client to Go: &lt;a href=&#34;https://github.com/wwt/guac&#34;&gt;https://github.com/wwt/guac&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The Apache Guacamole project describes itself better than I could:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Apache Guacamole is a clientless remote desktop gateway. It supports standard protocols like VNC, RDP, and SSH. We call it clientless because no plugins or client software are required. Thanks to HTML5, once Guacamole is installed on a server, all you need to access your desktops is a web browser.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I ported the client from Java to Go. The client sits between &lt;code&gt;guacd&lt;/code&gt; and the JavaScript app. The main motivation for this was Go is easier to work with than the old Java servlet setup that the Apache project uses.&lt;/p&gt;
+&lt;p&gt;I also created a simple SPA example using Vue: &lt;a href=&#34;https://github.com/wwt/guac-vue&#34;&gt;https://github.com/wwt/guac-vue&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The official project uses the old AngularJS 1.X so I thought a nice Vue example would be good to have on hand.&lt;/p&gt;
+&lt;p&gt;Here&#39;s a little demo:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.jakecoffman.com/blog/blog/guac.gif&#34; alt=&#34;Guac demo&#34;&gt;&lt;/p&gt;
+</description>
+     </item>
+   
+     <item>
+       <title>stack traces rule</title>
+       <link>https://www.jakecoffman.com/blog/post/02/</link>
+       <pubDate>Sun, 19 Jan 2020 14:29:28 -0600</pubDate>
+       
+       <guid>https://www.jakecoffman.com/blog/post/02/</guid>
+       <description>&lt;p&gt;I&#39;ve worked with a lot of languages and let me just say that having a big fat stack trace when something goes wrong is amazing. Java does this really well.&lt;/p&gt;
+&lt;p&gt;Not having a stack trace automatically like in Nodejs or Go is a really bad experience. I&#39;m forced to log every time there is a potential error in case a problem happens in production.&lt;/p&gt;
+&lt;p&gt;You guys that have only ever written JavaScript don&#39;t know what you&#39;re missing!&lt;/p&gt;
+</description>
+     </item>
+   
+     <item>
+       <title>first post</title>
+       <link>https://www.jakecoffman.com/blog/post/01/</link>
+       <pubDate>Sun, 19 Jan 2020 13:51:58 -0600</pubDate>
+       
+       <guid>https://www.jakecoffman.com/blog/post/01/</guid>
+       <description>&lt;p&gt;I&#39;ve tried starting a blog up about a million times and I usually don&#39;t post anything and delete it.&lt;/p&gt;
+&lt;p&gt;This time I&#39;ll try to make it stick by keeping it a &amp;ldquo;Micro-Blog&amp;rdquo; ala Twitter.&lt;/p&gt;
+&lt;p&gt;And with that&amp;hellip;&lt;/p&gt;
+</description>
+     </item>
+   
+ </channel>
+</rss>
