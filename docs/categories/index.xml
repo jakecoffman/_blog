@@ -65,6 +65,17 @@ AllowedIPs = 192.168.2.2/32 # based on the subnet you&#39;ve chosen in the addre
 &lt;pre&gt;&lt;code&gt;sudo chown -R root:root /etc/wireguard/
 sudo chmod -R og-rwx /etc/wireguard/*
 sudo systemctl enable wg-quick@wg0.service
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;additional-clients&#34;&gt;Additional clients&lt;/h2&gt;
+&lt;p&gt;You can setup additional clients with a config like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[Interface]
+PrivateKey = &amp;lt;new client&#39;s private key&amp;gt;
+ListenPort = 21841
+Address = 192.168.2.3/32 # always use a new IP in the subnet
+
+[Peer]
+PublicKey = &amp;lt;the server&#39;s public key&amp;gt;
+AllowedIPs = 192.168.2.0/24, 192.168.1.0/24 # you can also specify just which IPs to send through the VPN like this
+Endpoint = my.server.com:51820
 &lt;/code&gt;&lt;/pre&gt;</description>
      </item>
    
@@ -132,7 +143,7 @@ WantedBy=multi-user.target
 &lt;pre&gt;&lt;code&gt;systemctl reload-daemon
 systemctl jenkins start
 systemctl jenkins-docker start
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Note: I actually abandoned this because there&#39;s something nice about having the jobs just run on the OS normally. E.g. I can use the Jenkins user&#39;s ssh keys for deployment without having to configure all that in the Jenkinsfile. Also I can install Go or other tools globally through apt instead of having to use a container inside a container.&lt;/p&gt;</description>
      </item>
    
      <item>
