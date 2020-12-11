@@ -12,10 +12,10 @@
    
      <item>
        <title>Server-Side Hydration Anti-Pattern</title>
-       <link>https://www.jakecoffman.com/blog/post/06/</link>
+       <link>https://www.jakecoffman.com/blog/post/server-side-hydration/</link>
        <pubDate>Thu, 10 Dec 2020 14:49:48 -0500</pubDate>
        
-       <guid>https://www.jakecoffman.com/blog/post/06/</guid>
+       <guid>https://www.jakecoffman.com/blog/post/server-side-hydration/</guid>
        <description>&lt;p&gt;When designing and implementing a REST API in a service-oriented or microservice architecture you may be tempted to fetch remote objects so the UI doesn&amp;rsquo;t have to fetch them individually later. This is often called hydration or inflation.&lt;/p&gt;
 &lt;p&gt;I will now try to convince you that this is an anti-pattern to hydrate server-side.&lt;/p&gt;
 &lt;h2 id=&#34;an-example&#34;&gt;An Example&lt;/h2&gt;
@@ -37,10 +37,10 @@
    
      <item>
        <title>home Wireguard setup</title>
-       <link>https://www.jakecoffman.com/blog/post/05/</link>
+       <link>https://www.jakecoffman.com/blog/post/home-wireguard-setup/</link>
        <pubDate>Sun, 08 Mar 2020 14:49:48 -0500</pubDate>
        
-       <guid>https://www.jakecoffman.com/blog/post/05/</guid>
+       <guid>https://www.jakecoffman.com/blog/post/home-wireguard-setup/</guid>
        <description>&lt;p&gt;Here&amp;rsquo;s a quick guide to setting up Wireguard to connect your Android phone to your home network.&lt;/p&gt;
 &lt;h2 id=&#34;server-setup&#34;&gt;Server setup&lt;/h2&gt;
 &lt;p&gt;Do all of this as root.&lt;/p&gt;
@@ -106,10 +106,10 @@ Endpoint = my.server.com:51820
    
      <item>
        <title>simple Jenkins-in-Docker setup</title>
-       <link>https://www.jakecoffman.com/blog/post/04/</link>
+       <link>https://www.jakecoffman.com/blog/post/jenkins-in-docker/</link>
        <pubDate>Sun, 08 Mar 2020 13:13:44 -0500</pubDate>
        
-       <guid>https://www.jakecoffman.com/blog/post/04/</guid>
+       <guid>https://www.jakecoffman.com/blog/post/jenkins-in-docker/</guid>
        <description>&lt;p&gt;I set up my home lab again with a new hard drive and decided to host Jenkins in Docker. &lt;a href=&#34;https://jenkins.io/doc/book/installing/&#34;&gt;This page&lt;/a&gt; details how to run Jenkins in a container, but the instructions lacked specifics of how to get things going on a single box.&lt;/p&gt;
 &lt;p&gt;So here&amp;rsquo;s how I did it: I created two systemd configs (place these in &lt;code&gt;/etc/systemd/system&lt;/code&gt; as &lt;code&gt;jenkins.service&lt;/code&gt; and &lt;code&gt;jenkins-docker.service&lt;/code&gt;):&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;[Unit]
@@ -173,10 +173,10 @@ systemctl jenkins-docker start
    
      <item>
        <title>Guacamole Client ported to Go</title>
-       <link>https://www.jakecoffman.com/blog/post/03/</link>
+       <link>https://www.jakecoffman.com/blog/post/guacamole-client-go/</link>
        <pubDate>Sun, 19 Jan 2020 14:29:28 -0600</pubDate>
        
-       <guid>https://www.jakecoffman.com/blog/post/03/</guid>
+       <guid>https://www.jakecoffman.com/blog/post/guacamole-client-go/</guid>
        <description>&lt;p&gt;I was able to open source some work I did at &lt;a href=&#34;https://wwt.com&#34;&gt;WWT&lt;/a&gt; recently. It is a port of the Apache Guacamole Client to Go: &lt;a href=&#34;https://github.com/wwt/guac&#34;&gt;https://github.com/wwt/guac&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;The Apache Guacamole project describes itself better than I could:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -192,10 +192,10 @@ systemctl jenkins-docker start
    
      <item>
        <title>stack traces rule</title>
-       <link>https://www.jakecoffman.com/blog/post/02/</link>
+       <link>https://www.jakecoffman.com/blog/post/stack-traces-rule/</link>
        <pubDate>Sun, 19 Jan 2020 14:29:28 -0600</pubDate>
        
-       <guid>https://www.jakecoffman.com/blog/post/02/</guid>
+       <guid>https://www.jakecoffman.com/blog/post/stack-traces-rule/</guid>
        <description>&lt;p&gt;I&amp;rsquo;ve worked with a lot of languages and let me just say that having a big fat stack trace when something goes wrong is amazing. Java does this really well.&lt;/p&gt;
 &lt;p&gt;Not having a stack trace automatically like in Nodejs or Go is a really bad experience. I&amp;rsquo;m forced to log every time there is a potential error in case a problem happens in production.&lt;/p&gt;
 &lt;p&gt;You guys that have only ever written JavaScript don&amp;rsquo;t know what you&amp;rsquo;re missing!&lt;/p&gt;
@@ -204,10 +204,10 @@ systemctl jenkins-docker start
    
      <item>
        <title>first post</title>
-       <link>https://www.jakecoffman.com/blog/post/01/</link>
+       <link>https://www.jakecoffman.com/blog/post/first-post/</link>
        <pubDate>Sun, 19 Jan 2020 13:51:58 -0600</pubDate>
        
-       <guid>https://www.jakecoffman.com/blog/post/01/</guid>
+       <guid>https://www.jakecoffman.com/blog/post/first-post/</guid>
        <description>&lt;p&gt;I&amp;rsquo;ve tried starting a blog up about a million times and I usually don&amp;rsquo;t post anything and delete it.&lt;/p&gt;
 &lt;p&gt;This time I&amp;rsquo;ll try to make it stick by keeping it a &amp;ldquo;Micro-Blog&amp;rdquo; ala Twitter.&lt;/p&gt;
 &lt;p&gt;And with that&amp;hellip;&lt;/p&gt;
