@@ -6,10 +6,35 @@
    <description>Recent content on Jake&#39;s Micro-Blog</description>
    <generator>Hugo -- gohugo.io</generator>
    <language>en-us</language>
-   <lastBuildDate>Sun, 08 Mar 2020 14:49:48 -0500</lastBuildDate>
+   <lastBuildDate>Thu, 10 Dec 2020 14:49:48 -0500</lastBuildDate>
    
        <atom:link href="https://www.jakecoffman.com/blog/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Server-Side Hydration Anti-Pattern</title>
+       <link>https://www.jakecoffman.com/blog/post/06/</link>
+       <pubDate>Thu, 10 Dec 2020 14:49:48 -0500</pubDate>
+       
+       <guid>https://www.jakecoffman.com/blog/post/06/</guid>
+       <description>&lt;p&gt;When designing and implementing a REST API in a service-oriented or microservice architecture you may be tempted to fetch remote objects so the UI doesn&amp;rsquo;t have to fetch them individually later. This is often called hydration or inflation.&lt;/p&gt;
+&lt;p&gt;I will now try to convince you that this is an anti-pattern to hydrate server-side.&lt;/p&gt;
+&lt;h2 id=&#34;an-example&#34;&gt;An Example&lt;/h2&gt;
+&lt;p&gt;Let&amp;rsquo;s say you have a service for users, and your REST Resource contains a list of users. The naive approach is to store the user IDs in the list and then allow the UI to hydrate the users by calling to the user service.&lt;/p&gt;
+&lt;p&gt;Maybe you or the UI team thinks this is too much work for the UI to do! So you decide to hydrate your resource with the full user object by calling to the user service just before the response.&lt;/p&gt;
+&lt;p&gt;Suddenly you need to handle these new complexities:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The server needs to run these calls concurrently or risk being very slow.&lt;/li&gt;
+&lt;li&gt;The concurrent calls need to be rate limited, or you risk DDOSing your user service.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These are issues that browsers take care of for you automatically. The browser rate limits to (typically) six concurrent HTTP calls at a time.&lt;/p&gt;
+&lt;p&gt;Caching is another issue for the API. If you cache the data server-side you open a new can of worms: cache invalidation. Caching can also cause security issues if the user service denies external users from listing other external users, for example.&lt;/p&gt;
+&lt;p&gt;Having the UI fetch the resource makes much more sense from a design perspective as well. The initial call will complete quickly since it doesn&amp;rsquo;t do any kind of hydration. This gives the UI some things to display while it fetches the user data in the list of user IDs.&lt;/p&gt;
+&lt;p&gt;The UI is also in the position of knowing &lt;strong&gt;WHICH&lt;/strong&gt; users to fetch. Consider a resource that has thousands of users. It doesn&amp;rsquo;t make sense to fetch them all, the UI probably can only display a handful of user cards at a time anyway. So it can fetch the 5-10 that it needs, and the rest can wait.&lt;/p&gt;
+&lt;p&gt;The UI also can now cache the user objects separately from the Resource. This way if the user is surfing the different resources, and it encounters the same users it doesn&amp;rsquo;t need to re-hydrate. Cache invalidation is also simple: invalidate when the user refreshes. It can also use cache headers and a service-worker with the user service to further optimize caching.&lt;/p&gt;
+&lt;h2 id=&#34;keep-the-api-simple&#34;&gt;Keep the API Simple&lt;/h2&gt;
+&lt;p&gt;Server-side hydration causes an explosion of complexity that is hard to get right. By pushing hydration onto the UI, the overall system is simpler, and the system that is in the best position to decide what data needs to be fetched is in control.&lt;/p&gt;</description>
+     </item>
    
      <item>
        <title>home Wireguard setup</title>
@@ -17,12 +42,12 @@
        <pubDate>Sun, 08 Mar 2020 14:49:48 -0500</pubDate>
        
        <guid>https://www.jakecoffman.com/blog/post/05/</guid>
-       <description>&lt;p&gt;Here&#39;s a quick guide to setting up Wireguard to connect your Android phone to your home network.&lt;/p&gt;
+       <description>&lt;p&gt;Here&amp;rsquo;s a quick guide to setting up Wireguard to connect your Android phone to your home network.&lt;/p&gt;
 &lt;h2 id=&#34;server-setup&#34;&gt;Server setup&lt;/h2&gt;
 &lt;p&gt;Do all of this as root.&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Install Wireguard&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;mkdir /etc/wireguard&lt;/code&gt; if it doesn&#39;t already exist&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mkdir /etc/wireguard&lt;/code&gt; if it doesn&amp;rsquo;t already exist&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;cd /etc/wireguard&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;umask 077&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;wg genkey | tee privatekey | wg pubkey &amp;gt; publickey&lt;/code&gt;&lt;/li&gt;
@@ -51,18 +76,18 @@ AllowedIPs = 192.168.2.2/32 # based on the subnet you&#39;ve chosen in the addre
 &lt;/ol&gt;
 &lt;p&gt;Then add the sever as a peer by tapping &amp;ldquo;Add Peer&amp;rdquo;:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;Add the server&#39;s public key (it&#39;s in &lt;code&gt;/etc/wireguard/publickey&lt;/code&gt;, email it to yourself again)&lt;/li&gt;
+&lt;li&gt;Add the server&amp;rsquo;s public key (it&amp;rsquo;s in &lt;code&gt;/etc/wireguard/publickey&lt;/code&gt;, email it to yourself again)&lt;/li&gt;
 &lt;li&gt;In &lt;code&gt;Allowed IPs&lt;/code&gt; put &lt;code&gt;0.0.0.0/0, ::/0&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;In &lt;code&gt;Endpoint&lt;/code&gt; put in your server&#39;s IP or Host, like &lt;code&gt;my.server.com:51820&lt;/code&gt;. This port should match the port configured on the server &lt;code&gt;ListenPort&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;In &lt;code&gt;Endpoint&lt;/code&gt; put in your server&amp;rsquo;s IP or Host, like &lt;code&gt;my.server.com:51820&lt;/code&gt;. This port should match the port configured on the server &lt;code&gt;ListenPort&lt;/code&gt;.&lt;/li&gt;
 &lt;li&gt;Optionally set &lt;code&gt;Persistant keepalive&lt;/code&gt; to a value (e.g. &lt;code&gt;25&lt;/code&gt;) if you want the connection to send keepalives.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;That&#39;s it! Try to connect. If it worked it will say &lt;code&gt;Transfer&lt;/code&gt; and how much data has transferred.&lt;/p&gt;
-&lt;p&gt;If it doesn&#39;t work check:&lt;/p&gt;
+&lt;p&gt;That&amp;rsquo;s it! Try to connect. If it worked it will say &lt;code&gt;Transfer&lt;/code&gt; and how much data has transferred.&lt;/p&gt;
+&lt;p&gt;If it doesn&amp;rsquo;t work check:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Your router should be forwarding port 51820 to your server.&lt;/li&gt;
-&lt;li&gt;Your server&#39;s firewall should be allowing port 51820. Just UDP I think?&lt;/li&gt;
+&lt;li&gt;Your server&amp;rsquo;s firewall should be allowing port 51820. Just UDP I think?&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;You&#39;ll also want this to start on the server at startup, so do this:&lt;/p&gt;
+&lt;p&gt;You&amp;rsquo;ll also want this to start on the server at startup, so do this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo chown -R root:root /etc/wireguard/
 sudo chmod -R og-rwx /etc/wireguard/*
 sudo systemctl enable wg-quick@wg0.service
@@ -87,7 +112,7 @@ Endpoint = my.server.com:51820
        
        <guid>https://www.jakecoffman.com/blog/post/04/</guid>
        <description>&lt;p&gt;I set up my home lab again with a new hard drive and decided to host Jenkins in Docker. &lt;a href=&#34;https://jenkins.io/doc/book/installing/&#34;&gt;This page&lt;/a&gt; details how to run Jenkins in a container, but the instructions lacked specifics of how to get things going on a single box.&lt;/p&gt;
-&lt;p&gt;So here&#39;s how I did it: I created two systemd configs (place these in &lt;code&gt;/etc/systemd/system&lt;/code&gt; as &lt;code&gt;jenkins.service&lt;/code&gt; and &lt;code&gt;jenkins-docker.service&lt;/code&gt;):&lt;/p&gt;
+&lt;p&gt;So here&amp;rsquo;s how I did it: I created two systemd configs (place these in &lt;code&gt;/etc/systemd/system&lt;/code&gt; as &lt;code&gt;jenkins.service&lt;/code&gt; and &lt;code&gt;jenkins-docker.service&lt;/code&gt;):&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;[Unit]
 Description=Jenkins
 After=docker.service
@@ -116,8 +141,8 @@ ExecStop=docker stop jenkins
 
 [Install]
 WantedBy=multi-user.target
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;To the docker command I added &lt;code&gt;--user 0&lt;/code&gt; because the docker containers that the Jenkins jobs were trying to use my user (1000) which obviously wasn&#39;t working. I also mounted the volume to my local &lt;code&gt;/var/jenkins_home&lt;/code&gt;. I also removed &lt;code&gt;--detach&lt;/code&gt; since systemd expects commands to block.&lt;/p&gt;
-&lt;p&gt;Here&#39;s the other config:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;To the docker command I added &lt;code&gt;--user 0&lt;/code&gt; because the docker containers that the Jenkins jobs were trying to use my user (1000) which obviously wasn&amp;rsquo;t working. I also mounted the volume to my local &lt;code&gt;/var/jenkins_home&lt;/code&gt;. I also removed &lt;code&gt;--detach&lt;/code&gt; since systemd expects commands to block.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s the other config:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;[Unit]
 Description=Jenkins Docker
 After=docker.service
@@ -144,7 +169,7 @@ WantedBy=multi-user.target
 &lt;pre&gt;&lt;code&gt;systemctl reload-daemon
 systemctl jenkins start
 systemctl jenkins-docker start
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Note: I actually abandoned this because there&#39;s something nice about having the jobs just run on the OS normally. E.g. I can use the Jenkins user&#39;s ssh keys for deployment without having to configure all that in the Jenkinsfile. Also I can install Go or other tools globally through apt instead of having to use a container inside a container.&lt;/p&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Note: I actually abandoned this because there&amp;rsquo;s something nice about having the jobs just run on the OS normally. E.g. I can use the Jenkins user&amp;rsquo;s ssh keys for deployment without having to configure all that in the Jenkinsfile. Also I can install Go or other tools globally through apt instead of having to use a container inside a container.&lt;/p&gt;</description>
      </item>
    
      <item>
@@ -161,7 +186,7 @@ systemctl jenkins-docker start
 &lt;p&gt;I ported the client from Java to Go. The client sits between &lt;code&gt;guacd&lt;/code&gt; and the JavaScript app. The main motivation for this was Go is easier to work with than the old Java servlet setup that the Apache project uses.&lt;/p&gt;
 &lt;p&gt;I also created a simple SPA example using Vue: &lt;a href=&#34;https://github.com/wwt/guac-vue&#34;&gt;https://github.com/wwt/guac-vue&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;The official project uses the old AngularJS 1.X so I thought a nice Vue example would be good to have on hand.&lt;/p&gt;
-&lt;p&gt;Here&#39;s a little demo:&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s a little demo:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jakecoffman.com/blog/blog/guac.gif&#34; alt=&#34;Guac demo&#34;&gt;&lt;/p&gt;
 </description>
      </item>
@@ -172,9 +197,9 @@ systemctl jenkins-docker start
        <pubDate>Sun, 19 Jan 2020 14:29:28 -0600</pubDate>
        
        <guid>https://www.jakecoffman.com/blog/post/02/</guid>
-       <description>&lt;p&gt;I&#39;ve worked with a lot of languages and let me just say that having a big fat stack trace when something goes wrong is amazing. Java does this really well.&lt;/p&gt;
-&lt;p&gt;Not having a stack trace automatically like in Nodejs or Go is a really bad experience. I&#39;m forced to log every time there is a potential error in case a problem happens in production.&lt;/p&gt;
-&lt;p&gt;You guys that have only ever written JavaScript don&#39;t know what you&#39;re missing!&lt;/p&gt;
+       <description>&lt;p&gt;I&amp;rsquo;ve worked with a lot of languages and let me just say that having a big fat stack trace when something goes wrong is amazing. Java does this really well.&lt;/p&gt;
+&lt;p&gt;Not having a stack trace automatically like in Nodejs or Go is a really bad experience. I&amp;rsquo;m forced to log every time there is a potential error in case a problem happens in production.&lt;/p&gt;
+&lt;p&gt;You guys that have only ever written JavaScript don&amp;rsquo;t know what you&amp;rsquo;re missing!&lt;/p&gt;
 </description>
      </item>
    
@@ -184,8 +209,8 @@ systemctl jenkins-docker start
        <pubDate>Sun, 19 Jan 2020 13:51:58 -0600</pubDate>
        
        <guid>https://www.jakecoffman.com/blog/post/01/</guid>
-       <description>&lt;p&gt;I&#39;ve tried starting a blog up about a million times and I usually don&#39;t post anything and delete it.&lt;/p&gt;
-&lt;p&gt;This time I&#39;ll try to make it stick by keeping it a &amp;ldquo;Micro-Blog&amp;rdquo; ala Twitter.&lt;/p&gt;
+       <description>&lt;p&gt;I&amp;rsquo;ve tried starting a blog up about a million times and I usually don&amp;rsquo;t post anything and delete it.&lt;/p&gt;
+&lt;p&gt;This time I&amp;rsquo;ll try to make it stick by keeping it a &amp;ldquo;Micro-Blog&amp;rdquo; ala Twitter.&lt;/p&gt;
 &lt;p&gt;And with that&amp;hellip;&lt;/p&gt;
 </description>
      </item>
