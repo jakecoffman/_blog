@@ -3,27 +3,37 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://www.jakecoffman.com/blog/</loc>
+    <lastmod>2020-12-16T00:00:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jakecoffman.com/blog/post/</loc>
+    <lastmod>2020-12-16T00:00:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jakecoffman.com/blog/tags/</loc>
+    <lastmod>2020-12-16T00:00:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jakecoffman.com/blog/tags/testing/</loc>
+    <lastmod>2020-12-16T00:00:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jakecoffman.com/blog/post/unit-testing/</loc>
+    <lastmod>2020-12-16T00:00:00-05:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.jakecoffman.com/blog/tags/api/</loc>
     <lastmod>2020-12-10T14:49:48-05:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.jakecoffman.com/blog/</loc>
-    <lastmod>2020-12-10T14:49:48-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jakecoffman.com/blog/post/</loc>
-    <lastmod>2020-12-10T14:49:48-05:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://www.jakecoffman.com/blog/post/server-side-hydration/</loc>
-    <lastmod>2020-12-10T14:49:48-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jakecoffman.com/blog/tags/</loc>
     <lastmod>2020-12-10T14:49:48-05:00</lastmod>
   </url>
   
