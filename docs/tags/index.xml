@@ -6,10 +6,47 @@
    <description>Recent content in Tags on Jake&#39;s Micro-Blog</description>
    <generator>Hugo -- gohugo.io</generator>
    <language>en-us</language>
-   <lastBuildDate>Wed, 16 Dec 2020 00:00:00 -0500</lastBuildDate>
+   <lastBuildDate>Thu, 04 Mar 2021 12:00:00 -0500</lastBuildDate>
    
        <atom:link href="https://www.jakecoffman.com/blog/tags/index.xml" rel="self" type="application/rss+xml" />
    
+   
+     <item>
+       <title>Go swagger generator</title>
+       <link>https://www.jakecoffman.com/blog/post/swagger-generator/</link>
+       <pubDate>Thu, 04 Mar 2021 12:00:00 -0500</pubDate>
+       
+       <guid>https://www.jakecoffman.com/blog/post/swagger-generator/</guid>
+       <description>&lt;p&gt;I built a Go library that can generate Swagger and validation middleware automatically from Go code.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s called CRUD and you can get it here: &lt;a href=&#34;https://github.com/jakecoffman/crud&#34;&gt;https://github.com/jakecoffman/crud&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;getting-started&#34;&gt;Getting started&lt;/h2&gt;
+&lt;p&gt;Start by getting the package &lt;code&gt;go get github.com/jakecoffman/crud&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Then in your &lt;code&gt;main.go&lt;/code&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Create a router with &lt;code&gt;NewRouter&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Add routes with &lt;code&gt;Add&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Then call &lt;code&gt;Serve&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Routes are specifications that look like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;crud&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Spec&lt;/span&gt;{
+	&lt;span style=&#34;color:#a6e22e&#34;&gt;Method&lt;/span&gt;:      &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;PATCH&amp;#34;&lt;/span&gt;,
+	&lt;span style=&#34;color:#a6e22e&#34;&gt;Path&lt;/span&gt;:        &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/widgets/{id}&amp;#34;&lt;/span&gt;,
+	&lt;span style=&#34;color:#a6e22e&#34;&gt;PreHandlers&lt;/span&gt;: []&lt;span style=&#34;color:#a6e22e&#34;&gt;gin&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;HandlerFunc&lt;/span&gt;{&lt;span style=&#34;color:#a6e22e&#34;&gt;Auth&lt;/span&gt;},
+	&lt;span style=&#34;color:#a6e22e&#34;&gt;Handler&lt;/span&gt;:     &lt;span style=&#34;color:#a6e22e&#34;&gt;CreateHandler&lt;/span&gt;,
+	&lt;span style=&#34;color:#a6e22e&#34;&gt;Description&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Adds a widget&amp;#34;&lt;/span&gt;,
+	&lt;span style=&#34;color:#a6e22e&#34;&gt;Tags&lt;/span&gt;:        []&lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;{&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Widgets&amp;#34;&lt;/span&gt;},
+	&lt;span style=&#34;color:#a6e22e&#34;&gt;Validate&lt;/span&gt;: &lt;span style=&#34;color:#a6e22e&#34;&gt;crud&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Validate&lt;/span&gt;{
+		&lt;span style=&#34;color:#a6e22e&#34;&gt;Path&lt;/span&gt;: &lt;span style=&#34;color:#a6e22e&#34;&gt;crud&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Object&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;map&lt;/span&gt;[&lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;]&lt;span style=&#34;color:#a6e22e&#34;&gt;crud&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Field&lt;/span&gt;{
+			&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;id&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#a6e22e&#34;&gt;crud&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Number&lt;/span&gt;().&lt;span style=&#34;color:#a6e22e&#34;&gt;Required&lt;/span&gt;().&lt;span style=&#34;color:#a6e22e&#34;&gt;Description&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ID of the widget&amp;#34;&lt;/span&gt;),
+        }),
+		&lt;span style=&#34;color:#a6e22e&#34;&gt;Body&lt;/span&gt;: &lt;span style=&#34;color:#a6e22e&#34;&gt;crud&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Object&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;map&lt;/span&gt;[&lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;]&lt;span style=&#34;color:#a6e22e&#34;&gt;crud&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Field&lt;/span&gt;{
+			&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;owner&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#a6e22e&#34;&gt;crud&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;String&lt;/span&gt;().&lt;span style=&#34;color:#a6e22e&#34;&gt;Required&lt;/span&gt;().&lt;span style=&#34;color:#a6e22e&#34;&gt;Example&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Bob&amp;#34;&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;Description&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Widget owner&amp;#39;s name&amp;#34;&lt;/span&gt;),
+		}),
+	},
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This will add a route &lt;code&gt;/widgets/:id&lt;/code&gt; that responds to the PATCH method. It generates swagger and serves it at the root of the web application. It validates that the ID in the path is a number, so you don&amp;rsquo;t have to. It also validates that the body is an object and has an &amp;ldquo;owner&amp;rdquo; property that is a string, again so you won&amp;rsquo;t have to.&lt;/p&gt;
+&lt;p&gt;It mounts the swagger-ui at &lt;code&gt;/&lt;/code&gt; and loads up the generated swagger.json.&lt;/p&gt;</description>
+     </item>
    
      <item>
        <title>Unit Testing</title>
