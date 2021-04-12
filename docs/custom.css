@@ -10,6 +10,7 @@ pre {
     border-radius: 5px;
     box-shadow: none !important;
     color: limegreen !important;
+    overflow: scroll !important;
 }
 
 p > a {
