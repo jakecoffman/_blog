@@ -3,6 +3,31 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://www.jakecoffman.com/blog/</loc>
+    <lastmod>2021-04-12T08:29:20-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jakecoffman.com/blog/post/jenkins-sidecar/</loc>
+    <lastmod>2021-04-12T08:29:20-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jakecoffman.com/blog/post/</loc>
+    <lastmod>2021-04-12T08:29:20-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jakecoffman.com/blog/tags/</loc>
+    <lastmod>2021-04-12T08:29:20-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jakecoffman.com/blog/tags/testing/</loc>
+    <lastmod>2021-04-12T08:29:20-05:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.jakecoffman.com/blog/tags/api/</loc>
     <lastmod>2021-03-04T12:00:00-05:00</lastmod>
   </url>
@@ -10,26 +35,6 @@
   <url>
     <loc>https://www.jakecoffman.com/blog/post/swagger-generator/</loc>
     <lastmod>2021-03-04T12:00:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jakecoffman.com/blog/</loc>
-    <lastmod>2021-03-04T12:00:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jakecoffman.com/blog/post/</loc>
-    <lastmod>2021-03-04T12:00:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jakecoffman.com/blog/tags/</loc>
-    <lastmod>2021-03-04T12:00:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jakecoffman.com/blog/tags/testing/</loc>
-    <lastmod>2020-12-16T00:00:00-05:00</lastmod>
   </url>
   
   <url>
