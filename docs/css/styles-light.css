@@ -76,6 +76,10 @@ time {
   font-family: "Ruda", sans-serif;
 }
 
+#container nav a {
+  text-decoration: none;
+}
+
 #container nav ul {
   margin: 0;
   padding: 0;
@@ -152,6 +156,12 @@ time {
   padding: 0.8em;
   font-size: 0.9em;
   box-shadow: 0 -1px 0 #bbbbbb inset;
+}
+
+#container main article .highlight pre {
+  overflow-x: auto;
+  font-size: 0.9em;
+  padding: 0.8em;
 }
 
 #container main article pre code {
@@ -258,7 +268,7 @@ width: 100%;
 
 a {
   color: #666666;
-  text-decoration: none;
+  /*text-decoration: none;*/
 }
 
 .image, figure img, img {

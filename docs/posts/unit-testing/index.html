@@ -1,0 +1,201 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Unit Testing - Jake&#39;s Micro-Blog</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="The HTML5 Herald" />
+<meta name="author" content="Jake Coffman" /><meta property="og:title" content="Unit Testing" />
+<meta property="og:description" content="A unit test is a test that tests a single function with all external dependencies mocked or faked.
+Unit testing can either be valuable or be a detriment to the code base, depending on what is being tested." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jakecoffman.com/blog/posts/unit-testing/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-12-16T00:00:00-05:00" />
+<meta property="article:modified_time" content="2020-12-16T00:00:00-05:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Unit Testing"/>
+<meta name="twitter:description" content="A unit test is a test that tests a single function with all external dependencies mocked or faked.
+Unit testing can either be valuable or be a detriment to the code base, depending on what is being tested."/>
+
+<meta name="generator" content="Hugo 0.87.0" />
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://www.jakecoffman.com/blog/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/blog/css/styles.css" /><link rel='stylesheet' href='https://www.jakecoffman.com/blog/custom.css'></head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="/blog/">Jake&rsquo;s Micro-Blog</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/jakecoffman" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/nill" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>see also <a href="https://jakecoffman.com">https://jakecoffman.com</a></em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Unit Testing</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2020-12-16T00:00:00-05:00">Dec 16, 2020</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/blog/tags/testing">#testing</a>
+                
+            </em>
+        </li>
+        
+
+        <li>3 minute read</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <p>A unit test is a test that tests a single function with all external dependencies mocked or faked.</p>
+<p>Unit testing can either be valuable or be a detriment to the code base, depending on what is being tested.</p>
+<h2 id="the-good-parts">The Good Parts</h2>
+<p>Unit testing is valuable when the unit under test has few side effects and actually calculates a value. It can also be valuable to test difficult-to-recreate error scenarios like filesystem errors.</p>
+<p>Cross is a great candidate for unit testing since it is pure:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">v</span> <span style="color:#a6e22e">Vector</span>) <span style="color:#a6e22e">Cross</span>(<span style="color:#a6e22e">other</span> <span style="color:#a6e22e">Vector</span>) <span style="color:#66d9ef">float64</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">X</span><span style="color:#f92672">*</span><span style="color:#a6e22e">other</span>.<span style="color:#a6e22e">Y</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">Y</span><span style="color:#f92672">*</span><span style="color:#a6e22e">other</span>.<span style="color:#a6e22e">X</span>
+}
+</code></pre></div><p>This controller logic should be unit tested to ensure the error cases will always be handled. An integration test would work too but since there are no dependencies a unit test is preferable.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">async</span> <span style="color:#a6e22e">save</span>(<span style="color:#a6e22e">request</span>, <span style="color:#a6e22e">reply</span>) {
+  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">dataId</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">reservationId</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Boom</span>.<span style="color:#a6e22e">badRequest</span>(<span style="color:#e6db74">`Must be launched with one of: dataId, reservationId`</span>)
+  }
+  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">endDate</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">endDate</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">new</span> Date()) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Boom</span>.<span style="color:#a6e22e">badRequest</span>(<span style="color:#e6db74">`Already ended`</span>)
+  }
+  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">internal</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">workId</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Boom</span>.<span style="color:#a6e22e">badRequest</span>(<span style="color:#e6db74">`External users may not provide workId`</span>)
+  }
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><h2 id="easier-to-test-harder-to-use">Easier to test, harder to use</h2>
+<p>What happens when you write a test for this function?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">v</span> <span style="color:#a6e22e">Vector</span>) <span style="color:#a6e22e">Lerp</span>(<span style="color:#a6e22e">other</span> <span style="color:#a6e22e">Vector</span>, <span style="color:#a6e22e">t</span> <span style="color:#66d9ef">float64</span>) <span style="color:#a6e22e">Vector</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">Mult</span>(<span style="color:#ae81ff">1.0</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">t</span>).<span style="color:#a6e22e">Add</span>(<span style="color:#a6e22e">other</span>.<span style="color:#a6e22e">Mult</span>(<span style="color:#a6e22e">t</span>))
+}
+</code></pre></div><p>Strictly speaking you&rsquo;ve written an integration test, not a unit test!</p>
+<p>So a test purist would say you need to introduce dependency injection to mock out the other units:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">v</span> <span style="color:#a6e22e">Vector</span>) <span style="color:#a6e22e">Lerp</span>(<span style="color:#a6e22e">other</span> <span style="color:#a6e22e">Vector</span>, <span style="color:#a6e22e">t</span> <span style="color:#66d9ef">float64</span>, <span style="color:#a6e22e">mult</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">Vector</span>, <span style="color:#66d9ef">float64</span>) <span style="color:#a6e22e">Vector</span>, <span style="color:#a6e22e">add</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">Vector</span>, <span style="color:#a6e22e">Vector</span>) <span style="color:#a6e22e">Vector</span>) <span style="color:#a6e22e">Vector</span> {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">mult</span>(<span style="color:#a6e22e">v</span>, <span style="color:#ae81ff">1.0</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">t</span>), <span style="color:#a6e22e">mult</span>(<span style="color:#a6e22e">other</span>, <span style="color:#a6e22e">t</span>))
+}
+</code></pre></div><p>Or maybe some other similar scheme&hellip;</p>
+<p><strong>PLEASE DON&rsquo;T DO THIS.</strong></p>
+<p>Just write integration tests then at that point, and put them in a different directory. Sometimes by making your code easier to <em>unit</em> test you&rsquo;re making it harder to use and reason about.</p>
+<p>Dependency Injection is a good thing, but it needs to be applied in sensible ways. (TODO: Future blog post?)</p>
+<h2 id="testing-the-mocks">Testing the mocks</h2>
+<p>Consider this example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">async</span> <span style="color:#a6e22e">update</span>(<span style="color:#a6e22e">request</span>, <span style="color:#a6e22e">reply</span>) {
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">id</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">params</span>.<span style="color:#a6e22e">id</span>
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">instance</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">User</span>.<span style="color:#a6e22e">query</span>().<span style="color:#a6e22e">patchAndFetchById</span>(<span style="color:#a6e22e">id</span>, <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">payload</span>)
+
+  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">instance</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Boom</span>.<span style="color:#a6e22e">notFound</span>(<span style="color:#e6db74">`Cannot find user with ID &#39;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">id</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;`</span>)
+  }
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">instance</span>
+}
+</code></pre></div><p>Mocking out the User object so that database interaction doesn&rsquo;t happen means you&rsquo;re essentially testing whether you got your mock right. Does this code correctly handle when the ID is not found? It either throws or returns null, but we don&rsquo;t know if we mock it.</p>
+<p>Also consider if you get the mock right but later an update to the library changes the behavior. With a unit test you won&rsquo;t know something is wrong because <em>you&rsquo;re just testing your mocks</em>.</p>
+<p>Here&rsquo;s another kind of function not worth unit testing that I often see:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">async</span> <span style="color:#a6e22e">createValue</span>(<span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">b</span>) {
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">widgetService</span>.<span style="color:#a6e22e">fetchWidget</span>(<span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">b</span>)
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">trx</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">transactionService</span>.<span style="color:#a6e22e">start</span>(<span style="color:#a6e22e">c</span>)
+  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">billingService</span>.<span style="color:#a6e22e">createBill</span>(<span style="color:#a6e22e">trx</span>, <span style="color:#a6e22e">c</span>)
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>
+}
+</code></pre></div><p>This is &ldquo;glue code&rdquo;. Unit testing makes no sense and will slow you down when business needs change.</p>
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://www.jakecoffman.com/blog/posts/server-side-hydration/"><i class="fa fa-chevron-circle-left"></i> Server-Side Hydration Anti-Pattern</a>
+        </li>
+        
+        
+        <li>
+            <a href="https://www.jakecoffman.com/blog/posts/swagger-generator/">Go swagger generator <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6> |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://www.jakecoffman.com/blog/index.xml">Subscribe </a></h6>
+    </footer>
+</div>
+<script src="/blog/js/scripts.js"></script>
+
+
+</body>
+
+</html>
+

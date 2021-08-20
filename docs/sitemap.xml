@@ -1,94 +1,61 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
     <loc>https://www.jakecoffman.com/blog/</loc>
-    <lastmod>2021-04-12T08:29:20-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jakecoffman.com/blog/post/jenkins-sidecar/</loc>
-    <lastmod>2021-04-12T08:29:20-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jakecoffman.com/blog/post/</loc>
-    <lastmod>2021-04-12T08:29:20-05:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2021-08-20T00:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.jakecoffman.com/blog/posts/</loc>
+    <lastmod>2021-08-20T00:00:00-05:00</lastmod>
+  </url><url>
     <loc>https://www.jakecoffman.com/blog/tags/</loc>
-    <lastmod>2021-04-12T08:29:20-05:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2021-08-20T00:00:00-05:00</lastmod>
+  </url><url>
     <loc>https://www.jakecoffman.com/blog/tags/testing/</loc>
+    <lastmod>2021-08-20T00:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.jakecoffman.com/blog/posts/unit-testing-affirmation/</loc>
+    <lastmod>2021-08-20T00:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.jakecoffman.com/blog/posts/jenkins-sidecar/</loc>
     <lastmod>2021-04-12T08:29:20-05:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.jakecoffman.com/blog/tags/api/</loc>
     <lastmod>2021-03-04T12:00:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jakecoffman.com/blog/post/swagger-generator/</loc>
+  </url><url>
+    <loc>https://www.jakecoffman.com/blog/posts/swagger-generator/</loc>
     <lastmod>2021-03-04T12:00:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jakecoffman.com/blog/post/unit-testing/</loc>
+  </url><url>
+    <loc>https://www.jakecoffman.com/blog/posts/unit-testing/</loc>
     <lastmod>2020-12-16T00:00:00-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jakecoffman.com/blog/post/server-side-hydration/</loc>
+  </url><url>
+    <loc>https://www.jakecoffman.com/blog/posts/server-side-hydration/</loc>
     <lastmod>2020-12-10T14:49:48-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jakecoffman.com/blog/post/home-wireguard-setup/</loc>
+  </url><url>
+    <loc>https://www.jakecoffman.com/blog/posts/home-wireguard-setup/</loc>
     <lastmod>2020-03-08T14:49:48-05:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.jakecoffman.com/blog/tags/operations/</loc>
     <lastmod>2020-03-08T14:49:48-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jakecoffman.com/blog/post/jenkins-in-docker/</loc>
+  </url><url>
+    <loc>https://www.jakecoffman.com/blog/posts/jenkins-in-docker/</loc>
     <lastmod>2020-03-08T13:13:44-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jakecoffman.com/blog/post/guacamole-client-go/</loc>
+  </url><url>
+    <loc>https://www.jakecoffman.com/blog/posts/guacamole-client-go/</loc>
     <lastmod>2020-01-19T14:29:28-06:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.jakecoffman.com/blog/tags/programming/</loc>
     <lastmod>2020-01-19T14:29:28-06:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jakecoffman.com/blog/post/stack-traces-rule/</loc>
+  </url><url>
+    <loc>https://www.jakecoffman.com/blog/posts/stack-traces-rule/</loc>
     <lastmod>2020-01-19T14:29:28-06:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jakecoffman.com/blog/post/first-post/</loc>
+  </url><url>
+    <loc>https://www.jakecoffman.com/blog/posts/first-post/</loc>
     <lastmod>2020-01-19T13:51:58-06:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.jakecoffman.com/blog/tags/meta/</loc>
     <lastmod>2020-01-19T13:51:58-06:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://www.jakecoffman.com/blog/categories/</loc>
   </url>
-  
 </urlset>

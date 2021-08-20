@@ -1,0 +1,204 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>home Wireguard setup - Jake&#39;s Micro-Blog</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="The HTML5 Herald" />
+<meta name="author" content="Jake Coffman" /><meta property="og:title" content="home Wireguard setup" />
+<meta property="og:description" content="Here&rsquo;s a quick guide to setting up Wireguard to connect your Android phone to your home network." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jakecoffman.com/blog/posts/home-wireguard-setup/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-03-08T14:49:48-05:00" />
+<meta property="article:modified_time" content="2020-03-08T14:49:48-05:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="home Wireguard setup"/>
+<meta name="twitter:description" content="Here&rsquo;s a quick guide to setting up Wireguard to connect your Android phone to your home network."/>
+
+<meta name="generator" content="Hugo 0.87.0" />
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://www.jakecoffman.com/blog/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/blog/css/styles.css" /><link rel='stylesheet' href='https://www.jakecoffman.com/blog/custom.css'></head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="/blog/">Jake&rsquo;s Micro-Blog</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/jakecoffman" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/nill" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>see also <a href="https://jakecoffman.com">https://jakecoffman.com</a></em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>home Wireguard setup</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2020-03-08T14:49:48-05:00">Mar 8, 2020</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/blog/tags/operations">#operations</a>
+                
+            </em>
+        </li>
+        
+
+        <li>3 minute read</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <p>Here&rsquo;s a quick guide to setting up Wireguard to connect your Android phone to your home network.</p>
+<h2 id="server-setup">Server setup</h2>
+<p>Do all of this as root.</p>
+<ol>
+<li>Install Wireguard</li>
+<li><code>mkdir /etc/wireguard</code> if it doesn&rsquo;t already exist</li>
+<li><code>cd /etc/wireguard</code></li>
+<li><code>umask 077</code></li>
+<li><code>wg genkey | tee privatekey | wg pubkey &gt; publickey</code></li>
+<li><code>vim wg0.conf</code></li>
+</ol>
+<p>wg0.conf should have these contents:</p>
+<pre><code>[Interface]
+Address = 192.168.2.1  # this is the IP the server will have. Choose an unused subnet.
+PrivateKey = &lt;server's privatekey (not path to it, the actual private key)&gt;
+ListenPort = 51820 # this is the default Wireguard port
+PostUp   = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o enp2s5 -j MASQUERADE
+PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o enp2s5 -j
+
+[Peer]
+PublicKey = &lt;client's publickey (actual private key)&gt; # You will set the in the next part
+AllowedIPs = 192.168.2.2/32 # based on the subnet you've chosen in the address above
+</code></pre><p>Replace <code>enp2s5</code> with your actual device name. You can get this with <code>ip link show</code>.</p>
+<h2 id="client-setup">Client setup</h2>
+<ol>
+<li>Install the Wireguard Android app</li>
+<li>Touch &ldquo;Create from scratch&rdquo; under the plus menu</li>
+<li>Name it</li>
+<li>Generate a private and public key pair</li>
+<li>Copy the public key somehow to the server (email?)</li>
+<li>Set <code>Addresses</code> to be in the subnet, e.g. <code>192.168.2.2</code></li>
+</ol>
+<p>Then add the sever as a peer by tapping &ldquo;Add Peer&rdquo;:</p>
+<ol>
+<li>Add the server&rsquo;s public key (it&rsquo;s in <code>/etc/wireguard/publickey</code>, email it to yourself again)</li>
+<li>In <code>Allowed IPs</code> put <code>0.0.0.0/0, ::/0</code></li>
+<li>In <code>Endpoint</code> put in your server&rsquo;s IP or Host, like <code>my.server.com:51820</code>. This port should match the port configured on the server <code>ListenPort</code>.</li>
+<li>Optionally set <code>Persistant keepalive</code> to a value (e.g. <code>25</code>) if you want the connection to send keepalives.</li>
+</ol>
+<p>That&rsquo;s it! Try to connect. If it worked it will say <code>Transfer</code> and how much data has transferred.</p>
+<p>If it doesn&rsquo;t work check:</p>
+<ol>
+<li>Your router should be forwarding port 51820 to your server.</li>
+<li>Your server&rsquo;s firewall should be allowing port 51820. Just UDP I think?</li>
+</ol>
+<p>You&rsquo;ll also want this to start on the server at startup, so do this:</p>
+<pre><code>sudo chown -R root:root /etc/wireguard/
+sudo chmod -R og-rwx /etc/wireguard/*
+sudo systemctl enable wg-quick@wg0.service
+</code></pre><h2 id="additional-clients">Additional clients</h2>
+<p>You can setup additional clients with a config like this:</p>
+<pre><code>[Interface]
+PrivateKey = &lt;new client's private key&gt;
+ListenPort = 21841
+Address = 192.168.2.3/32 # always use a new IP in the subnet
+
+[Peer]
+PublicKey = &lt;the server's public key&gt;
+AllowedIPs = 192.168.2.0/24, 192.168.1.0/24 # you can also specify just which IPs to send through the VPN like this
+Endpoint = my.server.com:51820
+</code></pre>
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://www.jakecoffman.com/blog/posts/jenkins-in-docker/"><i class="fa fa-chevron-circle-left"></i> simple Jenkins-in-Docker setup</a>
+        </li>
+        
+        
+        <li>
+            <a href="https://www.jakecoffman.com/blog/posts/server-side-hydration/">Server-Side Hydration Anti-Pattern <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6> |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://www.jakecoffman.com/blog/index.xml">Subscribe </a></h6>
+    </footer>
+</div>
+<script src="/blog/js/scripts.js"></script>
+
+
+</body>
+
+</html>
+
