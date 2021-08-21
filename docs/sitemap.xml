@@ -2,6 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://www.jakecoffman.com/blog/posts/go/</loc>
+    <lastmod>2021-08-20T00:00:00-05:00</lastmod>
+  </url><url>
     <loc>https://www.jakecoffman.com/blog/</loc>
     <lastmod>2021-08-20T00:00:00-05:00</lastmod>
   </url><url>
@@ -12,6 +15,9 @@
     <lastmod>2021-08-20T00:00:00-05:00</lastmod>
   </url><url>
     <loc>https://www.jakecoffman.com/blog/tags/programming/</loc>
+    <lastmod>2021-08-20T00:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.jakecoffman.com/blog/tags/story/</loc>
     <lastmod>2021-08-20T00:00:00-05:00</lastmod>
   </url><url>
     <loc>https://www.jakecoffman.com/blog/tags/</loc>

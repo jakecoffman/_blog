@@ -1,0 +1,251 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Convincing my team to switch to Go - Jake&#39;s Micro-Blog</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="The HTML5 Herald" />
+<meta name="author" content="Jake Coffman" /><meta property="og:title" content="Convincing my team to switch to Go" />
+<meta property="og:description" content="A short story on how I convinced my team to switch to Go." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jakecoffman.com/blog/posts/go/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-08-20T00:00:00-05:00" />
+<meta property="article:modified_time" content="2021-08-20T00:00:00-05:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Convincing my team to switch to Go"/>
+<meta name="twitter:description" content="A short story on how I convinced my team to switch to Go."/>
+
+<meta name="generator" content="Hugo 0.87.0" />
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://www.jakecoffman.com/blog/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/blog/css/styles.css" /><link rel='stylesheet' href='https://www.jakecoffman.com/blog/custom.css'></head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="/blog/">Jake&rsquo;s Micro-Blog</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/jakecoffman" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/nill" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>see also <a href="https://jakecoffman.com">https://jakecoffman.com</a></em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Convincing my team to switch to Go</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2021-08-20T00:00:00-05:00">Aug 20, 2021</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/blog/tags/story">#story</a>
+                
+            </em>
+        </li>
+        
+
+        <li>6 minute read</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <p>A short story on how I convinced my team to switch to Go.</p>
+<h2 id="scenario">Scenario</h2>
+<p>When I first joined the company, we were using Groovy on Grails. I actually was hired because I had experienced in this
+niche language and framework.</p>
+<p>After a few years though, the writing was on the wall that this framework was not going to be supported for much longer.
+So the greater organization decided to put it to a vote on what language to use next, and they chose Node.js.</p>
+<p>At the time I had been using Go in my spare time. I was apprehensive to advocate for it because it had no generics, and
+I was worried it would be too difficult for people to learn. I had created a few projects at work where Go fit
+perfectly, mostly proxying requests.</p>
+<h2 id="task">Task</h2>
+<p>I was asked to join a smaller team to work on new features around the <a href="../guacamole-client-go">Apache Guacamole</a>
+project. I knew that Go would be a good fit for the project since it&rsquo;s a streaming service.</p>
+<h2 id="action">Action</h2>
+<p>I proposed to the manager of the new team that we begin using Go for this project and for other new projects rather than
+Node.js. I had a myriad of reasons why Go is superior to Node.js for the work we do.</p>
+<p>Go is a simpler language than JavaScript. After having used Node.js for a while, I learned my previous thoughts that Go
+is harder to learn were wrong, even without generics. Mostly this is because of the asynchronous nature of Node.js. I&rsquo;ve
+seen bug after bug related to a missing <code>await</code>, or confusion around Promises or callbacks.</p>
+<p>Go is higher performance than Node.js out-of-the-box without doing any extra work. We sometimes need a high performance
+proxy that makes decisions about small packets of data. Node.js is a nonstarter in those situations since we&rsquo;d have to
+run so many more servers to meet demand.</p>
+<p>Go often doesn&rsquo;t require any external dependencies. The standard library is so robust, often there are no dependencies
+required. Go also has a culture of resisting dependencies. With Node.js, programmers have been taught to grab
+dependencies for even the simplest things. I&rsquo;ve experienced a number of bugs around broken dependencies due to a myriad
+of reasons:</p>
+<ul>
+<li>The author of the dependency introduced a breaking change and didn&rsquo;t bump the major version.</li>
+<li>The dependency was abandoned, and we have to move up to a newer unsupported version of Node.js, so we have to fork it
+to fix it.</li>
+<li>Developers didn&rsquo;t use a package-lock, causing confusion around why a new build with no changes is breaking.</li>
+<li>The dependency is not robust or well tested and used by very few people, so we find bugs when it gets unexpected
+inputs.</li>
+</ul>
+<p>Go is statically typed, which leads to a better developer experience (DX). Our editors know more about what we&rsquo;re doing
+and can make better suggestions. The compiler uses types to catch errors earlier. It removes the possibility that our
+function that we expect a string argument receives an integer. Of course with Node.js we can use TypeScript which
+introduces types, but this leads to even more problems:</p>
+<ul>
+<li>TypeScript requires a build process to transpile into JavaScript, where with JavaScript directly we could just run it.
+This build step can be complex and confusing to set up for developers that aren&rsquo;t experienced with it. I myself have
+tried this and often get stuck.</li>
+<li>Since TypeScript is transpiled, it&rsquo;s machine generated JavaScript that&rsquo;s running in production. So when something goes
+wrong you may have to debug code that is messier and harder to read.</li>
+<li>TypeScript the language is getting very complicated. The authors are constantly adding new features, and the language
+also supports all JavaScript features. This is a recipe for madness! We can&rsquo;t fix a language by continuously adding to
+it. In a lot of ways, TypeScript is committing the same errors that C++ did.</li>
+<li>I often see developers just use <code>any</code> which completely defeats the purpose.</li>
+</ul>
+<h3 id="drawbacks">Drawbacks</h3>
+<p>Being a pragmatic programmer I also have openly acknowledged the drawbacks of Go.</p>
+<p>The largest drawback to me is Go lacks generics (although some are coming soon!) and this has had a big impact on the usability of the language. In
+JavaScript, we can do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">items</span> <span style="color:#f92672">=</span> [{<span style="color:#a6e22e">id</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>, <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;one&#39;</span>}, {<span style="color:#a6e22e">id</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span>, <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;two&#39;</span>}]
+<span style="color:#75715e">// find by ID (number)
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">result1</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">items</span>.<span style="color:#a6e22e">find</span>(<span style="color:#a6e22e">item</span> =&gt; <span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">id</span> <span style="color:#f92672">===</span> <span style="color:#ae81ff">1</span>)
+<span style="color:#75715e">// find by name (string)
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">result2</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">items</span>.<span style="color:#a6e22e">find</span>(<span style="color:#a6e22e">item</span> =&gt; <span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">name</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;one&#39;</span>)
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">assert</span>(<span style="color:#a6e22e">result1</span> <span style="color:#f92672">===</span> <span style="color:#a6e22e">result2</span>) <span style="color:#75715e">// true
+</span></code></pre></div><p>In Go, there is no built-in <code>Find</code>, so we&rsquo;d have to write a function like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main_test</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;reflect&#34;</span>
+	<span style="color:#e6db74">&#34;testing&#34;</span>
+)
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Item</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">ID</span>   <span style="color:#66d9ef">int</span>
+	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestFindItem</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
+	<span style="color:#a6e22e">items</span> <span style="color:#f92672">:=</span> []<span style="color:#a6e22e">Item</span>{
+		{<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;one&#34;</span>},
+		{<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#34;two&#34;</span>},
+	}
+	<span style="color:#a6e22e">result1</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">FindItem</span>(<span style="color:#a6e22e">items</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">item</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Item</span>) <span style="color:#66d9ef">bool</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">ID</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>
+	})
+	<span style="color:#a6e22e">result2</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">FindItem</span>(<span style="color:#a6e22e">items</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">item</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Item</span>) <span style="color:#66d9ef">bool</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">Name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;one&#34;</span>
+	})
+	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">DeepEqual</span>(<span style="color:#a6e22e">result1</span>, <span style="color:#a6e22e">result2</span>) {
+		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#e6db74">&#34;Unexpected results&#34;</span>)
+	}
+}
+
+<span style="color:#75715e">// FindItem returns the item in the array that results from finder returning true.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">FindItem</span>(<span style="color:#a6e22e">items</span> []<span style="color:#a6e22e">Item</span>, <span style="color:#a6e22e">finder</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">item</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Item</span>) <span style="color:#66d9ef">bool</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Item</span> {
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">items</span> {
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">finder</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">items</span>[<span style="color:#a6e22e">i</span>]) {
+			<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">items</span>[<span style="color:#a6e22e">i</span>]
+		}
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><p>While this is not complex to do, we have to write a Find function for each type. This adds to the verbosity of the language, and is just frustrating when most other languages have these features built-in. They even have a page called <a href="https://github.com/golang/go/wiki/SliceTricks">Slice Tricks</a> which is a huge smell that they missed something in the design of the language.</p>
+<p>To me this has been the largest drawback to the language. With the upcoming Go 1.18 release, we should get generics and a generic package to handle most of these problems with slices and other things.</p>
+<p>Some other smaller drawbacks to the language:</p>
+<ul>
+<li>The standard library&rsquo;s http Handlers are missing a couple of critical features: url parameters and chained middleware. So when trying to use the builtin http package I often end up writing a small framework around it. So instead of doing that, I often reach for a router dependency which has nicer features, which ends up pulling in more dependencies, which is not ideal.</li>
+<li>Some developers don&rsquo;t want to learn anything new, and Go is not as widely known as JavaScript.</li>
+<li>Error handling is very simple, but verbose. It&rsquo;s something you have to come to love, but it leads to a lack of stack traces which makes debugging harder.</li>
+<li>Concurrency primitives are great, but there are no higher level concurrency libraries due to lack of generics. After generics lands expect to see some kind of Streams library.</li>
+</ul>
+<h2 id="results">Results</h2>
+<p>The other senior developer on the team who was pushing TypeScript immediately understood the value of Go and was behind my efforts 100%.</p>
+<p>A self-taught programmer who had been doing Node.js for a while try Go, and he picked it up quickly and misses it when he is back on a Node.js project.</p>
+<p>A more seasoned team lead tried it and is starting all his new projects in Go.</p>
+<p>I rewrote the Apache Guacamole client in Go and have no regrets. I have a number of other projects launched, and I am finding good patterns for newer developers to use.</p>
+<p>We currently have 40 Go repos in our GitHub.</p>
+<p>Once generics lands I want to approach the larger team and offer this information as a case study!</p>
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://www.jakecoffman.com/blog/posts/ai/"><i class="fa fa-chevron-circle-left"></i> My AI Saga</a>
+        </li>
+        
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6> |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://www.jakecoffman.com/blog/index.xml">Subscribe </a></h6>
+    </footer>
+</div>
+<script src="/blog/js/scripts.js"></script>
+
+
+</body>
+
+</html>
+
