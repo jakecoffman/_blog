@@ -1,0 +1,194 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>My AI Saga - Jake&#39;s Micro-Blog</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="The HTML5 Herald" />
+<meta name="author" content="Jake Coffman" /><meta property="og:title" content="My AI Saga" />
+<meta property="og:description" content="I started getting into AI in 2020 when a coworker asked me if I wanted to compete on the CodinGame Spring Challenge. After 11 days, I finished 112th out of about 5,000 contestants. I was hooked!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jakecoffman.com/blog/posts/ai/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-08-20T00:00:00-05:00" />
+<meta property="article:modified_time" content="2021-08-20T00:00:00-05:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="My AI Saga"/>
+<meta name="twitter:description" content="I started getting into AI in 2020 when a coworker asked me if I wanted to compete on the CodinGame Spring Challenge. After 11 days, I finished 112th out of about 5,000 contestants. I was hooked!"/>
+
+<meta name="generator" content="Hugo 0.87.0" />
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://www.jakecoffman.com/blog/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/blog/css/styles.css" /><link rel='stylesheet' href='https://www.jakecoffman.com/blog/custom.css'></head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="/blog/">Jake&rsquo;s Micro-Blog</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/jakecoffman" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/nill" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>see also <a href="https://jakecoffman.com">https://jakecoffman.com</a></em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>My AI Saga</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2021-08-20T00:00:00-05:00">Aug 20, 2021</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/blog/tags/programming">#programming</a>
+                
+            </em>
+        </li>
+        
+
+        <li>3 minute read</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <p>I started getting into AI in 2020 when a coworker asked me if I wanted to compete on the <a href="https://www.codingame.com">CodinGame</a> Spring Challenge. After 11 days, <a href="https://www.codingame.com/contests/spring-challenge-2020/leaderboard/global?column=keyword&amp;value=jke">I finished 112th</a> out of about 5,000 contestants. I was hooked!</p>
+<h2 id="2020-spring-challenge">2020 Spring Challenge</h2>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/TA2hfUBZs84" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p>My basic strategy in this challenge was to use A* to find the most valuable route to the larger pellets, or just to find a valuable route that my opponent probably won&rsquo;t beat me to.</p>
+<p>Unfortunately I can&rsquo;t reveal my code since anyone could copy and paste it into the game. I did however create a repo called <a href="https://github.com/jakecoffman/graph">graph</a> that has generic versions of algorithms in Go that you can copy and paste into your project and use.</p>
+<p>Over the next year I joined in 2 more competitions.</p>
+<h2 id="2020-fall-challenge">2020 Fall Challenge</h2>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/UiFTRy2mdCo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p>In my time since the Spring Challenge I basically forgot the competition existed, so when I started this one I only had A* in my arsenal. At first glance it looked like I wouldn&rsquo;t be able to use it, but once you realize any problem can be reduced to a graph or a tree, and then traverse it using A*. So that&rsquo;s what I did for this competition.</p>
+<p>To my surprise, I ranked lower this time: 248th out of 7,011. I started reading about Beam Search which many of the other competitors said they used. I had trouble finding good code examples. The write-ups for Beam were in more academic papers which contained mathematical notation rather than code snippets.</p>
+<h2 id="2021-spring-challenge">2021 Spring Challenge</h2>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/KcfwfAJxgyc" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p>This time I was prepared to try Beam Search, but I was still having trouble finding nice examples for that algorithm. Someone in the chat said they were using a variant called Chokudai (named after another competitor!) which is a variant that uses depth-first search rather than breadth-first. I found a very clear and simple C++ program explaining the algorithm, so I was off!</p>
+<p>Unfortunately I had a worse placement than before: 413th out of 6,867. This time between competitions I decided to learn more, and capture what I already knew in my <a href="https://github.com/jakecoffman/graph">graph</a> repo.</p>
+<h2 id="genetic-algorithm">Genetic algorithm</h2>
+<p>After I made some clear examples of Beam and Chokudai, I decided to learn about Genetic Algorithms (GA) which had always interested me.</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/81mh4uJ7WHA" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p>In Code vs Zombies you can see my GA is corralling zombies in for a huge combo. In this optimization problem I am ranked 119th out of 10,772!</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/UVmh9adAtc4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p>In Mars Lander my GA navigates difficult terrain to land at the right speed on flat ground.</p>
+<p>For GAs it&rsquo;s important to visualize what each generation is doing. Here&rsquo;s what generation 0 might look like:</p>
+<p><img src="/blog/mars/gen0.svg" alt="Generation 0"></p>
+<p>There are some wispy lines that I pre-generate to get better results, and the rest are random.</p>
+<p>Generation 0 is my initial population. After selection, breeding, and mutating, we get Generation 1:</p>
+<p><img src="/blog/mars/gen1.svg" alt="Generation 1"></p>
+<p>Now there appears to be fewer lines, I suspect there is a lot of overlap. However now the lines are beginning to move in the direction of the landing site.</p>
+<p>Jumping up to Generation 10:</p>
+<p><img src="/blog/mars/gen10.svg" alt="Generation 10"></p>
+<p>Generation 10 is laser focused the landing site, but appears to be crashing straight into it. There should be more of a curve, so it lands safely.</p>
+<p>Jumping forward again to the final and best Generation:</p>
+<p><img src="/blog/mars/gen154.svg" alt="Generation 154"></p>
+<p>Now we see that the GA is slowing the lander down, so it can land safely.</p>
+<h2 id="whats-next">What&rsquo;s next?</h2>
+<p>2021 Fall Challenge is coming up. I&rsquo;m excited and hopeful to place high in the competition, assuming I can carve out enough time.</p>
+<p>I also have some more algorithms I need to try out, like Minimax.</p>
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://www.jakecoffman.com/blog/posts/unit-testing-affirmation/"><i class="fa fa-chevron-circle-left"></i> Unit Testing Affirmation</a>
+        </li>
+        
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6> |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://www.jakecoffman.com/blog/index.xml">Subscribe </a></h6>
+    </footer>
+</div>
+<script src="/blog/js/scripts.js"></script>
+
+
+</body>
+
+</html>
+
