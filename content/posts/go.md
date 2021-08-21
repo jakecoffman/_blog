@@ -4,7 +4,7 @@ date: 2021-08-21T00:00:00-05:00
 tags: [story]
 ---
 
-A short story on how I convinced my team to switch to Go.
+A story on how I convinced my team to switch to Go from Node.js.
 
 <!--more-->
 
