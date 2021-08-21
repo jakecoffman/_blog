@@ -11,6 +11,15 @@
    
    
      <item>
+       <title>Highly Available Cron-as-a-Service</title>
+       <link>https://www.jakecoffman.com/blog/posts/highly-available-cron/</link>
+       <pubDate>Sat, 21 Aug 2021 00:01:33 -0500</pubDate>
+       
+       <guid>https://www.jakecoffman.com/blog/posts/highly-available-cron/</guid>
+       <description>&lt;p&gt;Cloud Foundry has a problem. There&amp;rsquo;s no builtin way to run a single job on a schedule. So I developed one.&lt;/p&gt;&lt;h2 id=&#34;problem&#34;&gt;Problem&lt;/h2&gt;&lt;p&gt;For HA reasons we run multiple datacenters. So if one of them loses power, catches fire, or blows away, the other is still being load balanced to and no one notices.&lt;/p&gt;&lt;p&gt;So the problem with running a single job every hour is all the instances across datacenters will try to fire the job at the same time, causing havoc.&lt;/p&gt;&lt;h2 id=&#34;solution&#34;&gt;Solution&lt;/h2&gt;&lt;p&gt;To solve this problem I used a Message Queue (MQ). I created a durable queue and inserted a single message into it.&lt;/p&gt;&lt;p&gt;When the application starts up, it tries to grab the single message from the queue. Whichever instance gets the message then becomes the &amp;ldquo;executor&amp;rdquo; and installs the cron jobs and begins executing them.&lt;/p&gt;&lt;p&gt;The executor also processes cron CRUD operations since they immediately need to be scheduled, rescheduled, or unscheduled. The non-executors send CRUD operations to another queue that the executor processes. The executor changes the schedule and then writes the change to the database.&lt;/p&gt;&lt;p&gt;The executor never acknowledges the single message in the MQ. If it shuts down during a deployment or for maintenance, it can nack the message and the broker will send it to another app. If it crashes, the broker will see it lost connection and then resend to another app that is still running. In this way, we&amp;rsquo;ve achieved High Availability!&lt;/p&gt;&lt;h2 id=&#34;result&#34;&gt;Result&lt;/h2&gt;&lt;p&gt;We have over 350 cron jobs, many running every minute!&lt;/p&gt;&lt;p&gt;We rarely see a problem where during maintenance of the MQ for some reason the message is consumed. We simply check for that and insert the message again if it&amp;rsquo;s missing.&lt;/p&gt;&lt;p&gt;Otherwise, this has been very reliable.&lt;/p&gt;&lt;h2 id=&#34;other-solutions&#34;&gt;Other Solutions&lt;/h2&gt;&lt;p&gt;Another solution I thought of was a single database row that the application locks when it starts up.&lt;/p&gt;&lt;p&gt;I would need to look more into the situation where the application crashes whether the row lock is released. This would only work for databases that have row or object locking functionality.&lt;/p&gt;&lt;p&gt;The reason I didn&amp;rsquo;t go this route is we only had older versions of Mongo that didn&amp;rsquo;t have this kind of functionality.&lt;/p&gt;</description>
+     </item>
+   
+     <item>
        <title>Convincing my team to switch to Go</title>
        <link>https://www.jakecoffman.com/blog/posts/go/</link>
        <pubDate>Sat, 21 Aug 2021 00:00:00 -0500</pubDate>

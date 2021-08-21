@@ -1,0 +1,156 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Highly Available Cron-as-a-Service - Jake&#39;s Micro-Blog</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="The HTML5 Herald" />
+<meta name="author" content="Jake Coffman" /><meta property="og:title" content="Highly Available Cron-as-a-Service" />
+<meta property="og:description" content="Cloud Foundry has a problem. There&rsquo;s no builtin way to run a single job on a schedule. So I developed one." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jakecoffman.com/blog/posts/highly-available-cron/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-08-21T00:01:33-05:00" />
+<meta property="article:modified_time" content="2021-08-21T00:01:33-05:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Highly Available Cron-as-a-Service"/>
+<meta name="twitter:description" content="Cloud Foundry has a problem. There&rsquo;s no builtin way to run a single job on a schedule. So I developed one."/>
+
+<meta name="generator" content="Hugo 0.87.0" />
+    
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://www.jakecoffman.com/blog/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/blog/css/styles.css" /><link rel='stylesheet' href='https://www.jakecoffman.com/blog/custom.css'></head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+                <a href="/blog/">Jake&rsquo;s Micro-Blog</a>
+            </h1>
+
+      <ul id="social-media">
+             <li>
+               <a href="https://github.com/jakecoffman" title="GitHub">
+               <i class="fab fa-github fa-lg"></i>
+               </a>
+             </li>
+             <li>
+               <a href="https://twitter.com/nill" title="Twitter">
+               <i class="fab fa-twitter fa-lg"></i>
+               </a>
+             </li>
+      </ul>
+      
+      <p><em>see also <a href="https://jakecoffman.com">https://jakecoffman.com</a></em></p>
+      
+    </header>
+
+    
+<nav>
+    <ul>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Highly Available Cron-as-a-Service</h1>
+
+    
+      <aside>
+    <ul>
+        <li>
+            <time class="post-date" datetime="2021-08-21T00:01:33-05:00">Aug 21, 2021</time>
+        </li>
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/blog/tags/story">#story</a>
+                
+            </em>
+        </li>
+        
+
+        <li>2 minute read</li>
+    </ul>
+</aside>
+
+    
+
+    
+
+
+    <p>Cloud Foundry has a problem. There&rsquo;s no builtin way to run a single job on a schedule. So I developed one.</p>
+<h2 id="problem">Problem</h2>
+<p>For HA reasons we run multiple datacenters. So if one of them loses power, catches fire, or blows away, the other is still being load balanced to and no one notices.</p>
+<p>So the problem with running a single job every hour is all the instances across datacenters will try to fire the job at the same time, causing havoc.</p>
+<h2 id="solution">Solution</h2>
+<p>To solve this problem I used a Message Queue (MQ). I created a durable queue and inserted a single message into it.</p>
+<p>When the application starts up, it tries to grab the single message from the queue. Whichever instance gets the message then becomes the &ldquo;executor&rdquo; and installs the cron jobs and begins executing them.</p>
+<p>The executor also processes cron CRUD operations since they immediately need to be scheduled, rescheduled, or unscheduled. The non-executors send CRUD operations to another queue that the executor processes. The executor changes the schedule and then writes the change to the database.</p>
+<p>The executor never acknowledges the single message in the MQ. If it shuts down during a deployment or for maintenance, it can nack the message and the broker will send it to another app. If it crashes, the broker will see it lost connection and then resend to another app that is still running. In this way, we&rsquo;ve achieved High Availability!</p>
+<h2 id="result">Result</h2>
+<p>We have over 350 cron jobs, many running every minute!</p>
+<p>We rarely see a problem where during maintenance of the MQ for some reason the message is consumed. We simply check for that and insert the message again if it&rsquo;s missing.</p>
+<p>Otherwise, this has been very reliable.</p>
+<h2 id="other-solutions">Other Solutions</h2>
+<p>Another solution I thought of was a single database row that the application locks when it starts up.</p>
+<p>I would need to look more into the situation where the application crashes whether the row lock is released. This would only work for databases that have row or object locking functionality.</p>
+<p>The reason I didn&rsquo;t go this route is we only had older versions of Mongo that didn&rsquo;t have this kind of functionality.</p>
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://www.jakecoffman.com/blog/posts/go/"><i class="fa fa-chevron-circle-left"></i> Convincing my team to switch to Go</a>
+        </li>
+        
+        
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+</main>
+    <footer>
+        <h6> |
+            Rendered by <a href="https://gohugo.io" title="Hugo">Hugo</a> |
+            <a href="https://www.jakecoffman.com/blog/index.xml">Subscribe </a></h6>
+    </footer>
+</div>
+<script src="/blog/js/scripts.js"></script>
+
+
+</body>
+
+</html>
+
