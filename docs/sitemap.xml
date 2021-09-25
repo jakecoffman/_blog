@@ -2,19 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://www.jakecoffman.com/blog/tags/culture/</loc>
+    <lastmod>2021-09-24T12:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.jakecoffman.com/blog/</loc>
+    <lastmod>2021-09-24T12:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.jakecoffman.com/blog/posts/meetings/</loc>
+    <lastmod>2021-09-24T12:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.jakecoffman.com/blog/posts/</loc>
+    <lastmod>2021-09-24T12:00:00-05:00</lastmod>
+  </url><url>
+    <loc>https://www.jakecoffman.com/blog/tags/</loc>
+    <lastmod>2021-09-24T12:00:00-05:00</lastmod>
+  </url><url>
     <loc>https://www.jakecoffman.com/blog/posts/constructive-feedback/</loc>
     <lastmod>2021-08-29T00:08:33-05:00</lastmod>
   </url><url>
-    <loc>https://www.jakecoffman.com/blog/</loc>
-    <lastmod>2021-08-29T00:08:33-05:00</lastmod>
-  </url><url>
-    <loc>https://www.jakecoffman.com/blog/posts/</loc>
-    <lastmod>2021-08-29T00:08:33-05:00</lastmod>
-  </url><url>
     <loc>https://www.jakecoffman.com/blog/tags/story/</loc>
-    <lastmod>2021-08-29T00:08:33-05:00</lastmod>
-  </url><url>
-    <loc>https://www.jakecoffman.com/blog/tags/</loc>
     <lastmod>2021-08-29T00:08:33-05:00</lastmod>
   </url><url>
     <loc>https://www.jakecoffman.com/blog/posts/highly-available-cron/</loc>

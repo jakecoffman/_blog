@@ -30,3 +30,11 @@ h1,h2,h3,h4,h5 {
 h1 > a {
     color: #4ba2a2 !important;
 }
+
+table thead {
+    background: none !important;
+}
+
+th {
+    border-bottom: 1px solid white !important;
+}
