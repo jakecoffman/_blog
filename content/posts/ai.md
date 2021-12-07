@@ -40,7 +40,7 @@ After I made some clear examples of Beam and Chokudai, I decided to learn about 
 
 {{< youtube 81mh4uJ7WHA >}}
 
-In Code vs Zombies you can see my GA is corralling zombies in for a huge combo. In this optimization problem I am ranked 119th out of 10,772!
+In Code vs Zombies you can see my GA is corralling zombies in for a huge combo. In this optimization problem [I am ranked 56th out of 10,000+](https://www.codingame.com/multiplayer/optimization/code-vs-zombies/leaderboard?column=keyword&value=jke)!
 
 {{< youtube UVmh9adAtc4 >}}
 
